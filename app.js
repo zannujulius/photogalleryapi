@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const User = require("./models/user.model");
 require("dotenv").config();
 
+app.use(express.json());
 app.use(morgan("dev"));
 app.use(
   cookieSession({

@@ -15,14 +15,15 @@ passport.use(
       const user = await User.findOne({ googleId: profile.id });
       if (!user) {
         const newUser = await User.create({
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
+          firstname: profile.name.givenName,
+          lastname: profile.name.familyName,
           email: profile?.emails[0].value,
           googleId: profile?.id,
         });
         if (newUser) {
           newUser.save();
-          callback(null, profile);
+          console.log("final");
+          callback(null, { profile });
         }
       } else {
         callback(null, profile);

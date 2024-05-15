@@ -44,7 +44,8 @@ const postLogin = async (req, res, next) => {
     );
     res.status(200).json({
       message: "success",
-      data: { email, token: token },
+      status: 200,
+      data: { user: existingUser, token: token },
     });
   } else {
     res.json({
@@ -54,15 +55,15 @@ const postLogin = async (req, res, next) => {
 };
 
 const postSignUp = async (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body;
-  if (!firstName) {
+  const { firstname, lastname, email, password } = req.body;
+  if (!firstname) {
     res.status(400).json({
       status: 400,
       message: "Please provide your first name.",
     });
     return;
   }
-  if (!lastName) {
+  if (!lastname) {
     res.status(400).json({
       status: 400,
       message: "Please provide your last name.",
@@ -100,8 +101,8 @@ const postSignUp = async (req, res, next) => {
   const encyrptedPassword = await bcrypt.hash(password, 8);
   const role = "user";
   const newUser = await User.create({
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     email,
     password: encyrptedPassword,
     role,
